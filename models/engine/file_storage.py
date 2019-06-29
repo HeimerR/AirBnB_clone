@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ engine """
 import json
-from ..models.base_model import BaseModel
+from ..base_model import BaseModel
 
 
 class FileStorage:
@@ -23,14 +23,9 @@ class FileStorage:
         try:
             with open(FileStorage.__file_path) as file:
                aux_dict = json.loads(file.read())
-               print("read from file:")
-               print(aux_dict)
-               aux_dict2 = {}
             for key, obj in aux_dict.items():
-                print("hola")
-                aux_dict2.update({key : BaseModel(**obj)})
-            print(aux_dict2)
-            FileStorage.__objects = aux_dict2
+                aux_dict.update({key : BaseModel(**obj)})
+            FileStorage.__objects = aux_dict
         except:
             pass
 
