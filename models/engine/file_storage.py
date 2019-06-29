@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """ engine """
 import json
+from ..models.base_model import BaseModel
+
 
 class FileStorage:
     __file_path = "file.json"
@@ -13,12 +15,22 @@ class FileStorage:
         FileStorage.__objects.update({'{}.{}'.format(cls, obj.id) : obj})
     def save(self):
         with open(FileStorage.__file_path, mode="w") as file:
-            for obj in FileStorage.__objects.values():
-                file.write(json.dumps(obj.to_dict()))
+            aux_dict = {}
+            for key, obj in FileStorage.__objects.items():
+                aux_dict.update({key : obj.to_dict()})
+            file.write(json.dumps(aux_dict))
     def reload(self):
         try:
             with open(FileStorage.__file_path) as file:
-               FileStorage.__objects = json.loads(file.read())
+               aux_dict = json.loads(file.read())
+               print("read from file:")
+               print(aux_dict)
+               aux_dict2 = {}
+            for key, obj in aux_dict.items():
+                print("hola")
+                aux_dict2.update({key : BaseModel(**obj)})
+            print(aux_dict2)
+            FileStorage.__objects = aux_dict2
         except:
             pass
 
