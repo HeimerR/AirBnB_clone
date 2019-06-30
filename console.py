@@ -7,7 +7,7 @@ from models import storage
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
     name_classes = {"BaseModel": BaseModel}
-    
+
     def do_quit(self, arg):
         'Quit command to exit the program\n'
         return True
@@ -24,7 +24,7 @@ class HBNBCommand(cmd.Cmd):
         if cls == "":
             print("** class name missing **")
         elif cls in HBNBCommand.name_classes:
-            aux = HBNBCommand.name_classes.get(cls)() 
+            aux = HBNBCommand.name_classes.get(cls)()
             aux.save()
             print(aux.id)
         else:
@@ -34,13 +34,13 @@ class HBNBCommand(cmd.Cmd):
         list_arg = line.split(" ")
         if list_arg[0] == "":
             print("** class name missing **")
-        elif (list_arg[0] != "BaseModel"):
+        elif  not list_arg[0] in HBNBCommand.name_classes:
             print("** class doesn't exist **")
         elif len(list_arg) == 1:
             print("** instance id missing **")
         else:
             dict_objs = storage.all()
-            aux = "BaseModel.{}".format(list_arg[1])
+            aux = "{}.{}".format(list_arg[0] ,list_arg[1])
             if aux in dict_objs.keys():
                 print(dict_objs[aux])
             else:
