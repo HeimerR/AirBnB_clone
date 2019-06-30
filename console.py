@@ -50,15 +50,15 @@ class HBNBCommand(cmd.Cmd):
         list_arg = line.split(" ")
         if list_arg[0] == "":
             print("** class name missing **")
-        elif (list_arg[0] != "BaseModel"):
+        elif list_arg[0] not in HBNBCommand.name_classes:
             print("** class doesn't exist **")
         elif len(list_arg) == 1:
             print("** instance id missing **")
         else:
             dict_objs = storage.all()
-            aux = "BaseModel.{}".format(list_arg[1])
+            aux = "{}.{}".format(list_arg[0], list_arg[1])
             if aux in dict_objs.keys():
-                storage.delete(list_arg[1])
+                storage.delete(list_arg[0], list_arg[1])
             else:
                 print("** no instance found **")
 

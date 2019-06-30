@@ -28,8 +28,8 @@ class FileStorage:
             FileStorage.__objects = aux_dict
         except FileNotFoundError:
             pass
-    def delete(self, ids):
-        aux = "BaseModel.{}".format(ids)
+    def delete(self, class_name, ids):
+        aux = "{}.{}".format(class_name, ids)
         FileStorage.__objects.pop(aux)
         self.save()
 
