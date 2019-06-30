@@ -66,9 +66,9 @@ class HBNBCommand(cmd.Cmd):
         if (line == ""):
             list_obj = list(storage.all().values())
             print(list(map(lambda x: str(x), list_obj)))
-        elif (line == "BaseModel"):
+        elif line in HBNBCommand.name_classes:
             list_obj = list(storage.all().values())
-            list_obj = filter(lambda x: type(x) is BaseModel, list_obj)
+            list_obj = filter(lambda x: type(x) is HBNBCommand.name_classes.get(line), list_obj)
             print(list(map(lambda x: str(x), list_obj)))
         else:
             print("** class doesn't exist **")
