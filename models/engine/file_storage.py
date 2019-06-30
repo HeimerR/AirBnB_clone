@@ -2,11 +2,20 @@
 """ engine """
 import json
 from ..base_model import BaseModel
+from ..user import User
+from ..place import Place
+from ..state import State
+from ..city import City
+from ..amenity import Amenity
+from ..review import Review
 
 
 class FileStorage:
     __file_path = "file.json"
     __objects = {}
+    name_classes = {"BaseModel": BaseModel, "User": User,
+                    "Place": Place, "State": State, "City": City,
+                    "Amenity": Amenity, "Review": Review}
 
     def all(self):
         return self.__objects
@@ -24,7 +33,9 @@ class FileStorage:
             with open(FileStorage.__file_path) as file:
                 aux_dict = json.loads(file.read())
             for key, obj in sorted(aux_dict.items()):
-                aux_dict.update({key : BaseModel(**obj)})
+                model = key.split(".")[0]
+                modelval = FileStorage.name_classes.get(model)
+                aux_dict.update({key : modelval(**obj)})
             FileStorage.__objects = aux_dict
         except FileNotFoundError:
             pass

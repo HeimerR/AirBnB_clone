@@ -104,7 +104,7 @@ class HBNBCommand(cmd.Cmd):
                 attr = getattr(dict_objs[aux], list_arg[2], "")
                 setattr(dict_objs[aux], list_arg[2], type(attr)(list_arg[3]))
                 dict_objs[aux].save()
-                
+
 
 if __name__ == '__main__':
     console = HBNBCommand()
