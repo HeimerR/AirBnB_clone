@@ -31,6 +31,7 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, cls):
+        'Creates a new instance: Usage \'create <class name>\'\n'
         if cls == "":
             print("** class name missing **")
         elif cls in HBNBCommand.name_classes:
@@ -41,6 +42,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
 
     def do_show(self, line):
+        'Shows an instance using the identifier(id): Usage \'show <class name> <id>\'\n'
         list_arg = line.split(" ")
         if list_arg[0] == "":
             print("** class name missing **")
@@ -57,6 +59,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
 
     def do_destroy(self, line):
+        'Deletes an instance using the identifier(id): Usage \'destroy <class name> <id>\'\n'
         list_arg = line.split(" ")
         if list_arg[0] == "":
             print("** class name missing **")
@@ -73,6 +76,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
 
     def do_all(self, line):
+        'Shows all the instances: Usage \'all [<class name>]\'\n'
         if (line == ""):
             list_obj = list(storage.all().values())
             print(list(map(lambda x: str(x), list_obj)))
@@ -84,6 +88,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
 
     def do_update(self, line):
+        'Updates an instance: Usage \'update <class name> <id> <attribute name> "<attribute value>"\'\n'
         list_arg = shlex.split(line)
         if list_arg[0] == "":
             print("** class name missing **")
