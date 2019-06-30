@@ -42,24 +42,24 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
 
     def do_show(self, line):
-        'Shows an instance using the identifier(id): Usage \'show <class name> <id>\'\n'
+        '''Shows an instance: Usage \'show <class name> <id>\'\n'''
         list_arg = line.split(" ")
         if list_arg[0] == "":
             print("** class name missing **")
-        elif  not list_arg[0] in HBNBCommand.name_classes:
+        elif not list_arg[0] in HBNBCommand.name_classes:
             print("** class doesn't exist **")
         elif len(list_arg) == 1:
             print("** instance id missing **")
         else:
             dict_objs = storage.all()
-            aux = "{}.{}".format(list_arg[0] ,list_arg[1])
+            aux = "{}.{}".format(list_arg[0], list_arg[1])
             if aux in dict_objs.keys():
                 print(dict_objs[aux])
             else:
                 print("** no instance found **")
 
     def do_destroy(self, line):
-        'Deletes an instance using the identifier(id): Usage \'destroy <class name> <id>\'\n'
+        'Deletes an instance: Usage \'destroy <class name> <id>\'\n'
         list_arg = line.split(" ")
         if list_arg[0] == "":
             print("** class name missing **")
@@ -82,21 +82,25 @@ class HBNBCommand(cmd.Cmd):
             print(list(map(lambda x: str(x), list_obj)))
         elif line in HBNBCommand.name_classes:
             list_obj = list(storage.all().values())
-            list_obj = filter(lambda x: type(x) is HBNBCommand.name_classes.get(line), list_obj)
+            list_obj = filter(lambda x: type(x) is
+                              HBNBCommand.name_classes.get(line), list_obj)
             print(list(map(lambda x: str(x), list_obj)))
         else:
             print("** class doesn't exist **")
 
     def do_update(self, line):
-        'Updates an instance: Usage \'update <class name> <id> <attribute name> "<attribute value>"\'\n'
+        '''Updates an instance:
+        Usage \'update <class name> <id> <attribute name> "<attribute value>"\'
+        '''
         list_arg = shlex.split(line)
         if list_arg[0] == "":
             print("** class name missing **")
-        elif  not list_arg[0] in HBNBCommand.name_classes:
+        elif not list_arg[0] in HBNBCommand.name_classes:
             print("** class doesn't exist **")
         elif len(list_arg) == 1:
             print("** instance id missing **")
-        elif "{}.{}".format(list_arg[0], list_arg[1]) not in storage.all().keys():
+        elif ("{}.{}".format(list_arg[0], list_arg[1])
+              not in storage.all().keys()):
             print("** no instance found **")
         elif len(list_arg) == 2:
             print("** attribute name missing **")
