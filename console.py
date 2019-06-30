@@ -1,5 +1,10 @@
 #!/usr/bin/python3
-""" commenst """
+"""
+Entry point of the command interpreter
+Use: ./console.py
+(hbnb) <command>
+
+"""
 import cmd
 from models.base_model import BaseModel
 from models import storage
@@ -13,6 +18,14 @@ import shlex
 
 
 class HBNBCommand(cmd.Cmd):
+    """
+    Use of cmd class as an interpreter
+
+    Class Attributes:
+        prompt (str): custom prompt
+        name_classes: dictionay of classes
+
+    """
     prompt = "(hbnb) "
     name_classes = {"BaseModel": BaseModel, "User": User,
                     "Place": Place, "State": State, "City": City,

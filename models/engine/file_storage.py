@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" engine """
+""" Engine package for the AirBnB """
 import json
 from ..base_model import BaseModel
 from ..user import User
@@ -11,6 +11,17 @@ from ..review import Review
 
 
 class FileStorage:
+    """
+    FileStorage class - store the objects
+
+    Class Attributes:
+        __file_path (str): path of the JSON file where data is stored
+        __objects (dict): dictionary where the instances are stored
+        name_classes (dict): dictionary where the different kind of classes are
+                             stored
+
+    """
+
     __file_path = "file.json"
     __objects = {}
     name_classes = {"BaseModel": BaseModel, "User": User,
@@ -18,13 +29,43 @@ class FileStorage:
                     "Amenity": Amenity, "Review": Review}
 
     def all(self):
+        """
+        all - return the dictionary where the instances are stored
+
+        Args:
+            None
+
+        Returns:
+            the dictionary where the instancces are stored
+
+        """
         return self.__objects
 
     def new(self, obj):
+        """
+        new - saves a new instance
+
+        Args:
+            obj (class instance): object to be stored
+
+        Returns:
+            None
+
+        """
         cls = type(obj).__name__
         FileStorage.__objects.update({'{}.{}'.format(cls, obj.id): obj})
 
     def save(self):
+        """
+        save - save objects to JSON file
+
+        Args:
+            None
+
+        Returns:
+            None
+
+        """
         with open(FileStorage.__file_path, mode="w") as file:
             aux_dict = {}
             for key, obj in FileStorage.__objects.items():
@@ -32,6 +73,16 @@ class FileStorage:
             file.write(json.dumps(aux_dict))
 
     def reload(self):
+        """
+        reload - loads from JSON file
+
+        Args:
+            None
+
+        Returns:
+            None
+
+        """
         try:
             with open(FileStorage.__file_path) as file:
                 aux_dict = json.loads(file.read())
@@ -44,6 +95,17 @@ class FileStorage:
             pass
 
     def delete(self, class_name, ids):
+        """
+        delete - delete an instance from the storage
+
+        Args:
+            class_name (str): name of the class
+            ids (str): id of the instance
+
+        Returns:
+            None
+
+        """
         aux = "{}.{}".format(class_name, ids)
         FileStorage.__objects.pop(aux)
         self.save()
