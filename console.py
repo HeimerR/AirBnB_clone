@@ -4,12 +4,19 @@ import cmd
 from models.base_model import BaseModel
 from models import storage
 from models.user import User
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
 import shlex
 
 
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
-    name_classes = {"BaseModel": BaseModel, "User": User}
+    name_classes = {"BaseModel": BaseModel, "User": User,
+                    "Place": Place, "State": State, "City": City,
+                    "Amenity": Amenity, "Review": Review}
 
     def do_quit(self, arg):
         'Quit command to exit the program\n'
