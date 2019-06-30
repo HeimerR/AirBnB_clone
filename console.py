@@ -127,6 +127,11 @@ class HBNBCommand(cmd.Cmd):
                 setattr(dict_objs[aux], list_arg[2], type(attr)(list_arg[3]))
                 dict_objs[aux].save()
 
+    def do_User(selfi, line):
+        '''functions for User:
+
+        '''
+
 
 if __name__ == '__main__':
     console = HBNBCommand()
