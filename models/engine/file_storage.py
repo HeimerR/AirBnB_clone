@@ -22,12 +22,15 @@ class FileStorage:
     def reload(self):
         try:
             with open(FileStorage.__file_path) as file:
-               aux_dict = json.loads(file.read())
-            for key, obj in aux_dict.items():
+                aux_dict = json.loads(file.read())
+            for key, obj in sorted(aux_dict.items()):
                 aux_dict.update({key : BaseModel(**obj)})
             FileStorage.__objects = aux_dict
-        except:
+        except FileNotFoundError:
             pass
-
+    def delete(self, ids):
+        aux = "BaseModel.{}".format(ids)
+        FileStorage.__objects.pop(aux)
+        self.save()
 
 
