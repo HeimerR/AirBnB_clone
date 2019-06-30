@@ -6,25 +6,30 @@ from models import storage
 
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
-
+    name_classes = {"BaseModel": BaseModel}
+    
     def do_quit(self, arg):
         'Quit command to exit the program\n'
         return True
+
     def do_EOF(self, arg):
         'Ctr + D to exit the program\n'
         print()
         return True
+
     def emptyline(self):
         pass
+
     def do_create(self, cls):
         if cls == "":
             print("** class name missing **")
-        elif (cls == "BaseModel"):
-            aux =  BaseModel()
+        elif cls in HBNBCommand.name_classes:
+            aux = HBNBCommand.name_classes.get(cls)() 
             aux.save()
             print(aux.id)
         else:
             print("** class doesn't exist **")
+
     def do_show(self, line):
         list_arg = line.split(" ")
         if list_arg[0] == "":
@@ -40,6 +45,7 @@ class HBNBCommand(cmd.Cmd):
                 print(dict_objs[aux])
             else:
                 print("** no instance found **")
+
     def do_destroy(self, line):
         list_arg = line.split(" ")
         if list_arg[0] == "":
@@ -55,6 +61,7 @@ class HBNBCommand(cmd.Cmd):
                 storage.delete(list_arg[1])
             else:
                 print("** no instance found **")
+
     def do_all(self, line):
         if (line == ""):
             list_obj = list(storage.all().values())
@@ -65,6 +72,7 @@ class HBNBCommand(cmd.Cmd):
             print(list(map(lambda x: str(x), list_obj)))
         else:
             print("** class doesn't exist **")
+
     def do_update(self, line):
         list_arg = line.split(" ")
         if list_arg[0] == "":
