@@ -24,6 +24,7 @@ class HBNBCommand(cmd.Cmd):
     Class Attributes:
         prompt (str): custom prompt
         name_classes: dictionay of classes
+        name_dotcommand: commands/functions with dot format
 
     """
     prompt = "(hbnb) "
@@ -127,6 +128,65 @@ class HBNBCommand(cmd.Cmd):
                 setattr(dict_objs[aux], list_arg[2], type(attr)(list_arg[3]))
                 dict_objs[aux].save()
 
+    @staticmethod
+    def all_class(obj):
+        '''call all instaces of obj'''
+        list_obj = list(storage.all().values())
+        list_obj = filter(lambda x: type(x) is
+                          HBNBCommand.name_classes.get(obj), list_obj)
+        print("[{}]".format(", ".join(list(map(lambda x: str(x),
+              list_obj)))))
+
+    name_dotcommand = {".all()": "HBNBCommand.all_class"}
+
+    def do_User(self, line):
+        '''functions for User:
+
+        '''
+        if line in HBNBCommand.name_dotcommand:
+            eval(HBNBCommand.name_dotcommand[line] + '("User")')
+
+    def do_State(self, line):
+        '''functions for State:
+
+        '''
+        if line in HBNBCommand.name_dotcommand:
+            eval(HBNBCommand.name_dotcommand[line] + '("State")')
+
+    def do_City(self, line):
+        '''functions for City:
+
+        '''
+        if line in HBNBCommand.name_dotcommand:
+            eval(HBNBCommand.name_dotcommand[line] + '("City")')
+
+    def do_Amenity(self, line):
+        '''functions for Amenity:
+
+        '''
+        if line in HBNBCommand.name_dotcommand:
+            eval(HBNBCommand.name_dotcommand[line] + '("Amenity")')
+
+    def do_Place(self, line):
+        '''functions for Place:
+
+        '''
+        if line in HBNBCommand.name_dotcommand:
+            eval(HBNBCommand.name_dotcommand[line] + '("Place")')
+
+    def do_Review(self, line):
+        '''functions for Review:
+
+        '''
+        if line in HBNBCommand.name_dotcommand:
+            eval(HBNBCommand.name_dotcommand[line] + '("Review")')
+
+    def do_BaseModel(self, line):
+        '''functions for BaseModel:
+
+        '''
+        if line in HBNBCommand.name_dotcommand:
+            eval(HBNBCommand.name_dotcommand[line] + '("BaseModel")')
 
 if __name__ == '__main__':
     console = HBNBCommand()
