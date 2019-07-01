@@ -157,10 +157,17 @@ class HBNBCommand(cmd.Cmd):
         dummy = HBNBCommand()
         dummy.do_destroy(" ".join(args))
 
+    @staticmethod
+    def update_class(*args):
+        ''' update an intance '''
+        dummy = HBNBCommand()
+        dummy.do_update(" ".join(args))
+
     name_dotcommand = {".all()": "HBNBCommand.all_class",
                        ".count()": "HBNBCommand.count_class",
                        ".show()": "HBNBCommand.show_class",
-                       ".destroy()": "HBNBCommand.destroy_class"}
+                       ".destroy()": "HBNBCommand.destroy_class",
+                       ".update()": "HBNBCommand.update_class"}
 
 
     def do_User(self, line):
