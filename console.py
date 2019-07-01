@@ -161,7 +161,12 @@ class HBNBCommand(cmd.Cmd):
     def update_class(*args):
         ''' update an intance '''
         dummy = HBNBCommand()
-        dummy.do_update(" ".join(args))
+        if len(args) == 3 and type(args[2]) is dict:
+            for attr, val in args[2].items():
+                tmp = list(args[0:2]) + [attr, str(val)]
+                dummy.do_update(" ".join(tmp))
+        else:
+            dummy.do_update(" ".join(args))
 
     name_dotcommand = {".all()": "HBNBCommand.all_class",
                        ".count()": "HBNBCommand.count_class",
