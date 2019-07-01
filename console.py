@@ -132,11 +132,8 @@ class HBNBCommand(cmd.Cmd):
     @staticmethod
     def all_class(*args):
         '''call all instaces of obj'''
-        list_obj = list(storage.all().values())
-        list_obj = filter(lambda x: type(x) is
-                          HBNBCommand.name_classes.get(args[0]), list_obj)
-        print("[{}]".format(", ".join(list(map(lambda x: str(x),
-              list_obj)))))
+        dummy = HBNBCommand()
+        dummy.do_all(args[0])
 
     @staticmethod
     def count_class(*args):
