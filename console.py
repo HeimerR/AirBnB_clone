@@ -174,7 +174,6 @@ class HBNBCommand(cmd.Cmd):
                        ".destroy()": "HBNBCommand.destroy_class",
                        ".update()": "HBNBCommand.update_class"}
 
-
     def do_User(self, line):
         '''functions for User:
 
