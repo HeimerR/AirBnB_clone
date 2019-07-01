@@ -42,6 +42,7 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def emptyline(self):
+        'Overrides the empty line method inherited from cmd'
         pass
 
     def do_create(self, cls):
