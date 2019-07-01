@@ -129,22 +129,32 @@ class HBNBCommand(cmd.Cmd):
                 dict_objs[aux].save()
 
     @staticmethod
-    def all_class(obj):
+    def all_class(*args):
         '''call all instaces of obj'''
         list_obj = list(storage.all().values())
         list_obj = filter(lambda x: type(x) is
-                          HBNBCommand.name_classes.get(obj), list_obj)
+                          HBNBCommand.name_classes.get(args[0]), list_obj)
         print("[{}]".format(", ".join(list(map(lambda x: str(x),
               list_obj)))))
 
-    name_dotcommand = {".all()": "HBNBCommand.all_class"}
+    @staticmethod
+    def show_class(*args):
+        ''' show an intances '''
+        dummy = HBNBCommand()
+        dummy.do_show(" ".join(args))
+
+    name_dotcommand = {".all()": "HBNBCommand.all_class",
+                       ".show()": "HBNBCommand.show_class"}
 
     def do_User(self, line):
         '''functions for User:
 
         '''
-        if line in HBNBCommand.name_dotcommand:
-            eval(HBNBCommand.name_dotcommand[line] + '("User")')
+        cmd_args = line[line.find("(") + 1:line.find(")")]
+        cmd_line = line.replace(cmd_args, "")
+        if cmd_line in HBNBCommand.name_dotcommand:
+            eval(HBNBCommand.name_dotcommand[cmd_line] + "({})"
+                 .format("'User', " + cmd_args))
 
     def do_State(self, line):
         '''functions for State:
