@@ -151,9 +151,29 @@ class HBNBCommand(cmd.Cmd):
         dummy = HBNBCommand()
         dummy.do_show(" ".join(args))
 
+    @staticmethod
+    def destroy_class(*args):
+        ''' destroy an intance '''
+        dummy = HBNBCommand()
+        dummy.do_destroy(" ".join(args))
+
+    @staticmethod
+    def update_class(*args):
+        ''' update an intance '''
+        dummy = HBNBCommand()
+        if len(args) == 3 and type(args[2]) is dict:
+            for attr, val in args[2].items():
+                tmp = list(args[0:2]) + [attr, str(val)]
+                dummy.do_update(" ".join(tmp))
+        else:
+            dummy.do_update(" ".join(args))
+
     name_dotcommand = {".all()": "HBNBCommand.all_class",
                        ".count()": "HBNBCommand.count_class",
-                       ".show()": "HBNBCommand.show_class"}
+                       ".show()": "HBNBCommand.show_class",
+                       ".destroy()": "HBNBCommand.destroy_class",
+                       ".update()": "HBNBCommand.update_class"}
+
 
     def do_User(self, line):
         '''functions for User:
@@ -169,43 +189,61 @@ class HBNBCommand(cmd.Cmd):
         '''functions for State:
 
         '''
-        if line in HBNBCommand.name_dotcommand:
-            eval(HBNBCommand.name_dotcommand[line] + '("State")')
+        cmd_args = line[line.find("(") + 1:line.find(")")]
+        cmd_line = line.replace(cmd_args, "")
+        if cmd_line in HBNBCommand.name_dotcommand:
+            eval(HBNBCommand.name_dotcommand[cmd_line] + "({})"
+                 .format("'State', " + cmd_args))
 
     def do_City(self, line):
         '''functions for City:
 
         '''
-        if line in HBNBCommand.name_dotcommand:
-            eval(HBNBCommand.name_dotcommand[line] + '("City")')
+        cmd_args = line[line.find("(") + 1:line.find(")")]
+        cmd_line = line.replace(cmd_args, "")
+        if cmd_line in HBNBCommand.name_dotcommand:
+            eval(HBNBCommand.name_dotcommand[cmd_line] + "({})"
+                 .format("'City', " + cmd_args))
 
     def do_Amenity(self, line):
         '''functions for Amenity:
 
         '''
-        if line in HBNBCommand.name_dotcommand:
-            eval(HBNBCommand.name_dotcommand[line] + '("Amenity")')
+        cmd_args = line[line.find("(") + 1:line.find(")")]
+        cmd_line = line.replace(cmd_args, "")
+        if cmd_line in HBNBCommand.name_dotcommand:
+            eval(HBNBCommand.name_dotcommand[cmd_line] + "({})"
+                 .format("'Amenity', " + cmd_args))
 
     def do_Place(self, line):
         '''functions for Place:
 
         '''
-        if line in HBNBCommand.name_dotcommand:
-            eval(HBNBCommand.name_dotcommand[line] + '("Place")')
+        cmd_args = line[line.find("(") + 1:line.find(")")]
+        cmd_line = line.replace(cmd_args, "")
+        if cmd_line in HBNBCommand.name_dotcommand:
+            eval(HBNBCommand.name_dotcommand[cmd_line] + "({})"
+                 .format("'Place', " + cmd_args))
 
     def do_Review(self, line):
         '''functions for Review:
 
         '''
-        if line in HBNBCommand.name_dotcommand:
-            eval(HBNBCommand.name_dotcommand[line] + '("Review")')
+        cmd_args = line[line.find("(") + 1:line.find(")")]
+        cmd_line = line.replace(cmd_args, "")
+        if cmd_line in HBNBCommand.name_dotcommand:
+            eval(HBNBCommand.name_dotcommand[cmd_line] + "({})"
+                 .format("'Review', " + cmd_args))
 
     def do_BaseModel(self, line):
         '''functions for BaseModel:
 
         '''
-        if line in HBNBCommand.name_dotcommand:
-            eval(HBNBCommand.name_dotcommand[line] + '("BaseModel")')
+        cmd_args = line[line.find("(") + 1:line.find(")")]
+        cmd_line = line.replace(cmd_args, "")
+        if cmd_line in HBNBCommand.name_dotcommand:
+            eval(HBNBCommand.name_dotcommand[cmd_line] + "({})"
+                 .format("'BaseModel', " + cmd_args))
 
 if __name__ == '__main__':
     console = HBNBCommand()
