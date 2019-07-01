@@ -137,7 +137,16 @@ class HBNBCommand(cmd.Cmd):
         print("[{}]".format(", ".join(list(map(lambda x: str(x),
               list_obj)))))
 
-    name_dotcommand = {".all()": "HBNBCommand.all_class"}
+    @staticmethod
+    def count_class(obj):
+        '''count all instaces of obj'''
+        list_obj = list(storage.all().values())
+        list_obj = filter(lambda x: type(x) is
+                          HBNBCommand.name_classes.get(obj), list_obj)
+        print(len(list(list_obj)))
+
+    name_dotcommand = {".all()": "HBNBCommand.all_class",
+                       ".count()": "HBNBCommand.count_class"}
 
     def do_User(self, line):
         '''functions for User:
