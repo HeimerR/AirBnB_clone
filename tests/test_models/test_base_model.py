@@ -2,7 +2,7 @@
 """ doctest unittest """
 import unittest
 import pep8
-import models
+from models.base_model import BaseModel
 import os
 
 
@@ -24,7 +24,7 @@ class TestBase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """ first set up """
-        cls.ins = models.base_model.BaseModel()
+        cls.ins = BaseModel()
 
     @classmethod
     def tearDownClass(cls):
@@ -44,14 +44,16 @@ class TestBase(unittest.TestCase):
         pass
 
     def test_BaseModeldoc(self):
-        """ test base model documentation """
+        """ test base model documentation
         self.assertNotEqual(len(models.__doc__), 0)
         self.assertNotEqual(len(models.base_model.__doc__), 0)
-        self.assertNotEqual(len(models.base_model.BaseModel.__doc__), 0)
-        self.assertIsNotNone(models.base_model.BaseModel.__init__.__doc__)
-        self.assertIsNotNone(models.base_model.BaseModel.__str__.__doc__)
-        self.assertIsNotNone(models.base_model.BaseModel.save.__doc__)
-        self.assertIsNotNone(models.base_model.BaseModel.to_dict.__doc__)
+
+        """
+        self.assertNotEqual(len(BaseModel.__doc__), 0)
+        self.assertIsNotNone(BaseModel.__init__.__doc__)
+        self.assertIsNotNone(BaseModel.__str__.__doc__)
+        self.assertIsNotNone(BaseModel.save.__doc__)
+        self.assertIsNotNone(BaseModel.to_dict.__doc__)
 
     def test_BaseModelAttr(self):
         """ test basemodel attributes """
@@ -60,7 +62,7 @@ class TestBase(unittest.TestCase):
         self.assertEqual(hasattr(self.ins, "updated_at"), True)
 
     def test_isinstance(self):
-        self.assertTrue(isinstance(self.ins, models.base_model.BaseModel))
+        self.assertTrue(isinstance(self.ins, BaseModel))
 
     def test_save_updated_at_created_at(self):
         self.ins.save()
