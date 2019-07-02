@@ -20,8 +20,9 @@ class TestBase(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        """ first set up """
+        """ first set up
         check = style.check_files([file_base_model, file_test_base_model])
+        """
         cls.ins = BaseModel()
 
     @classmethod
