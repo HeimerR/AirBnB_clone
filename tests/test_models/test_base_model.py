@@ -22,22 +22,28 @@ class TestBase(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
+        """ first set up """
         cls.ins = BaseModel()
 
     @classmethod
     def tearDownClass(cls):
+        """ final statement """
         pass
 
     def setUp(self):
+        """ first set up before test """
         pass
 
     def tearDown(self):
+        """ final statement after test """
         pass
 
     def test_BaseModeldoc(self):
+        """ test base model documentation """
         self.assertNotEqual(len(BaseModel.__doc__), 0)
 
     def test_BaseModelAttr(self):
+        """ test basemodel attributes """
         self.assertEqual(hasattr(self.ins, "id"), True)
         self.assertEqual(hasattr(self.ins, "created_at"), True)
         self.assertEqual(hasattr(self.ins, "updated_at"), True)
