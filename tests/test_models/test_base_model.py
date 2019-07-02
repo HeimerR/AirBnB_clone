@@ -69,9 +69,8 @@ class TestBase(unittest.TestCase):
     def test_dict(self):
         dicto = self.ins.to_dict()
         self.assertTrue(dicto.get("__class__"))
-
-"""    def test_str(self):
-        string = """
+        self.assertTrue(type(dicto) is dict)
+        self.assertTrue("to_dict" in dir(self.ins))
 
 if __name__ == '__main__':
     unittest.main()
