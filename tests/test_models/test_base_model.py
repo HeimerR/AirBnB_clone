@@ -61,5 +61,12 @@ class TestBase(unittest.TestCase):
         self.ins.save()
         self.assertNotEqual(self.ins.created_at, self.ins.updated_at)
 
+    def test_dict(self):
+        dicto = self.ins.to_dict()
+        self.assertTrue(dicto.get("__class__"))
+
+"""    def test_str(self):
+        string = """
+
 if __name__ == '__main__':
     unittest.main()
