@@ -1,64 +1,71 @@
 #!/usr/bin/python3
-'''Unittest for base_model'''
+""" doctest unittest """
 import unittest
+import pep8
 from models.base_model import BaseModel
 import os
-import pep8
 
 
-class test_base_model(unittest.TestCase):
-    '''Tests BaseModel class'''
+class Testpep8(unittest.TestCase):
+    """ test pep8 """
+    def test_pep8(self):
+        """ test pep8 """
+        style = pep8.StyleGuide(quiet=True)
+        file_base_model = "models/base_model.py"
+        file_test_base_model = "tests/test_models/test_base_model.py"
+        check = style.check_files([file_base_model, file_test_base_model])
+        self.assertEqual(check.total_errors, 0,
+                         "Found code style errors (and warning).")
+
+
+class TestBase(unittest.TestCase):
+    """ test """
 
     @classmethod
     def setUpClass(cls):
-        '''set up before every test method'''
-        cls.base1 = BaseModel()
+        """ first set up """
+        tmp = style.check_files(["models/base_model.py"])
+        cls.ins = BaseModel()
 
     @classmethod
     def teardown(cls):
-        '''remove test instances'''
-        del cls.base1
+        """ final statement """
+        del cls.ins
         try:
             os.remove("file.json")
-        except BaseException:
+        except:
             pass
 
-    def test_pep8_test_style(self):
-        '''Pep8 style test'''
-        pepe = pep8.StyleGuide(quiet=True)
-        res = style.check_files(['models/base_model.py'])
-        self.assertEqual(res.total_errors, 0, "Fix Style")
+    def test_BaseModeldoc(self):
+        """ test base model documentation
+        self.assertNotEqual(len(models.__doc__), 0)
+        self.assertNotEqual(len(models.base_model.__doc__), 0)
 
-    def test_docstring_test(self):
-        '''Checks for docs'''
-        for doc_fun in dir(BaseModel):
-            self.assertIsNotNone(doc_fun.__doc__)
+        """
+        self.assertNotEqual(len(BaseModel.__doc__), 0)
+        self.assertIsNotNone(BaseModel.__init__.__doc__)
+        self.assertIsNotNone(BaseModel.__str__.__doc__)
+        self.assertIsNotNone(BaseModel.save.__doc__)
+        self.assertIsNotNone(BaseModel.to_dict.__doc__)
 
-    def test_docstring_class_class(self):
-        self.assertIsNotNone(BaseModel.__doc__)
+    def test_BaseModelAttr(self):
+        """ test basemodel attributes """
+        self.assertEqual(hasattr(self.ins, "id"), True)
+        self.assertEqual(hasattr(self.ins, "created_at"), True)
+        self.assertEqual(hasattr(self.ins, "updated_at"), True)
 
-    def test_check_if_hasattr(self):
-        """Checks if the methods exists"""
-        self.assertTrue(hasattr(BaseModel, "__init__"))
-        self.assertTrue(hasattr(BaseModel, "created_at"))
-        self.assertTrue(hasattr(BaseModel, "updated_at"))
-        self.assertTrue(hasattr(BaseModel, "id"))
+    def test_isinstance(self):
+        self.assertTrue(isinstance(self.ins, BaseModel))
 
-    def test_constructor_test(self):
-        """Tests for the constructor"""
-        self.assertTrue(isinstance(self.base1, BaseModel))
+    def test_save_updated_at_created_at(self):
+        self.ins.save()
+        self.assertNotEqual(self.ins.created_at, self.ins.updated_at)
 
-    def test_save_method_test(self):
-        """Tests save method"""
-        self.base1.save()
-        self.assertNotEqual(self.base1.created_at, self.base1.updated_at)
+    def test_dict(self):
+        dicto = self.ins.to_dict()
+        self.assertTrue(dicto.get("__class__"))
+        self.assertTrue(type(dicto) is dict)
+        self.assertTrue("to_dict" in dir(self.ins))
 
-    def test_dictionary_test(self):
-        '''Tests to_dict method'''
-        test_dict = self.base1.to_dict()
-        self.assertEqual(type(test_dict), dict)
-        self.assertTrue('to_dict' in dir(self.base1))
-
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()
