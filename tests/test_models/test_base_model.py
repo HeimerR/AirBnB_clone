@@ -2,7 +2,7 @@
 """ doctest unittest """
 import unittest
 import pep8
-from models.base_model import BaseModel
+import models
 
 
 class Testpep8(unittest.TestCase):
@@ -23,7 +23,7 @@ class TestBase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """ first set up """
-        cls.ins = BaseModel()
+        cls.ins = models.base_model.BaseModel()
 
     @classmethod
     def tearDownClass(cls):
@@ -40,7 +40,13 @@ class TestBase(unittest.TestCase):
 
     def test_BaseModeldoc(self):
         """ test base model documentation """
-        self.assertNotEqual(len(BaseModel.__doc__), 0)
+        self.assertNotEqual(len(models.__doc__), 0)
+        self.assertNotEqual(len(models.base_model.__doc__), 0)
+        self.assertNotEqual(len(models.base_model.BaseModel.__doc__), 0)
+        for method in dir(models.base_model.BaseModel):
+            if method != "__dict__":
+                self.assertIsNotNone(eval(
+                    "models.base_model.BaseModel.{}.__doc__".format(method)))
 
     def test_BaseModelAttr(self):
         """ test basemodel attributes """
