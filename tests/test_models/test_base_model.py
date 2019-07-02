@@ -3,6 +3,7 @@
 import unittest
 import pep8
 import models
+import os
 
 
 class Testpep8(unittest.TestCase):
@@ -28,7 +29,11 @@ class TestBase(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         """ final statement """
-        pass
+        del cls.ins
+        try:
+            os.remove("file.json")
+        except:
+            pass
 
     def setUp(self):
         """ first set up before test """
