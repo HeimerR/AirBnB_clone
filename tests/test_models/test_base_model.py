@@ -6,8 +6,9 @@ from models.base_model import BaseModel
 import os
 
 
-class Testpep8(unittest.TestCase):
-    """ test pep8 """
+class TestBase(unittest.TestCase):
+    """ test """
+
     def test_pep8(self):
         """ test pep8 """
         style = pep8.StyleGuide(quiet=True)
@@ -17,14 +18,9 @@ class Testpep8(unittest.TestCase):
         self.assertEqual(check.total_errors, 0,
                          "Found code style errors (and warning).")
 
-
-class TestBase(unittest.TestCase):
-    """ test """
-
     @classmethod
     def setUpClass(cls):
         """ first set up """
-        tmp = style.check_files(["models/base_model.py"])
         cls.ins = BaseModel()
 
     @classmethod
