@@ -43,10 +43,10 @@ class TestBase(unittest.TestCase):
         self.assertNotEqual(len(models.__doc__), 0)
         self.assertNotEqual(len(models.base_model.__doc__), 0)
         self.assertNotEqual(len(models.base_model.BaseModel.__doc__), 0)
-        for method in dir(models.base_model.BaseModel):
-            if method != "__dict__":
-                self.assertIsNotNone(eval(
-                    "models.base_model.BaseModel.{}.__doc__".format(method)))
+        self.assertIsNotNone(models.base_model.BaseModel.__init__.__doc__)
+        self.assertIsNotNone(models.base_model.BaseModel.__str__.__doc__)
+        self.assertIsNotNone(models.base_model.BaseModel.save.__doc__)
+        self.assertIsNotNone(models.base_model.BaseModel.to_dict.__doc__)
 
     def test_BaseModelAttr(self):
         """ test basemodel attributes """
@@ -54,6 +54,12 @@ class TestBase(unittest.TestCase):
         self.assertEqual(hasattr(self.ins, "created_at"), True)
         self.assertEqual(hasattr(self.ins, "updated_at"), True)
 
+    def test_isinstance(self):
+        self.assertTrue(isinstance(self.ins, models.base_model.BaseModel))
+
+    def test_save(self):
+        self.ins.save()
+        self.assertNotEqual(self.ins.created_at, self.ins.updated_at)
 
 if __name__ == '__main__':
     unittest.main()
