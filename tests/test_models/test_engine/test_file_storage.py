@@ -16,7 +16,7 @@ class TestBase(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        pass
+        tmp = style.check_files(["models/base_model.py"])
 
     @classmethod
     def tearDownClass(cls):
