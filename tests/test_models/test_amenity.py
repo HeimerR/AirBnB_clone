@@ -4,7 +4,10 @@ import unittest
 import pep8
 
 class Testpep8(unittest.TestCase):
+    """ Class to test pep8 """
+
     def test_pep8(self):
+        """ test pep8 """
         style = pep8.StyleGuide(quiet=True)
         file_base_model = "models/base_model.py"
         check = style.check_files([file_base_model])
@@ -16,16 +19,20 @@ class TestBase(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
+        """ first test to run """
         pass
 
     @classmethod
     def tearDownClass(cls):
+        """ last test to run """
         pass
 
     def setUp(self):
+        """ previous assignments """
         pass
 
     def tearDown(self):
+        """ after assignments """
         pass
 
     """ def test_setid(self):
@@ -65,4 +72,3 @@ class TestBase(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-

@@ -108,7 +108,7 @@ class HBNBCommand(cmd.Cmd):
         Usage \'update <class name> <id> <attribute name> "<attribute value>"\'
         '''
         list_arg = shlex.split(line)
-        if list_arg[0] == "":
+        if len(list_arg) == 0:
             print("** class name missing **")
         elif not list_arg[0] in HBNBCommand.name_classes:
             print("** class doesn't exist **")
