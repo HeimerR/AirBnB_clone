@@ -27,21 +27,13 @@ class TestBase(unittest.TestCase):
         cls.ins = BaseModel()
 
     @classmethod
-    def tearDownClass(cls):
+    def teardown(cls):
         """ final statement """
         del cls.ins
         try:
             os.remove("file.json")
         except:
             pass
-
-    def setUp(self):
-        """ first set up before test """
-        pass
-
-    def tearDown(self):
-        """ final statement after test """
-        pass
 
     def test_BaseModeldoc(self):
         """ test base model documentation
