@@ -57,7 +57,7 @@ class TestBase(unittest.TestCase):
     def test_isinstance(self):
         self.assertTrue(isinstance(self.ins, models.base_model.BaseModel))
 
-    def test_save(self):
+    def test_save_updated_at_created_at(self):
         self.ins.save()
         self.assertNotEqual(self.ins.created_at, self.ins.updated_at)
 
