@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
-[![holberton_airbnb_logo](https://holbertonintranet.s3.amazonaws.com/uploads/medias/2018/6/65f4a1dd9c51265f49d0.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUXW7JF5MT%2F20190703%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20190703T152323Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=fad27256d815f6d0b1720d8d7a9effc1b6995a5254853cede6512b6741a08605)]
+[![holberton_airbnb_logo]](https://holbertonintranet.s3.amazonaws.com/uploads/medias/2018/6/65f4a1dd9c51265f49d0.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUXW7JF5MT%2F20190703%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20190703T152323Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=fad27256d815f6d0b1720d8d7a9effc1b6995a5254853cede6512b6741a08605)
 
 AirBnB-clone is a web application that seeks to replicate the AirBnB software platform for educational purposes. 
 
