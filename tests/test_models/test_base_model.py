@@ -3,6 +3,8 @@
 import unittest
 import pep8
 from models.base_model import BaseModel
+from models import storage
+from models.engine.file_storage import FileStorage
 import os
 
 
@@ -64,6 +66,18 @@ class TestBase(unittest.TestCase):
         self.assertTrue(dicto.get("__class__"))
         self.assertTrue(type(dicto) is dict)
         self.assertTrue("to_dict" in dir(self.ins))
+
+    def test_var_storage(self):
+        my_objs = storage.all()
+
+        self.assertTrue(type(my_objs) is dict)
+        self.assertTrue(isinstance(storage, FileStorage))
+
+    def test_reload(self):
+        self.ins.save()
+        storage.reload()
+        my_dict = storage.all()
+        self.assertTrue(len(my_dict) != 0)
 
 if __name__ == '__main__':
     unittest.main()

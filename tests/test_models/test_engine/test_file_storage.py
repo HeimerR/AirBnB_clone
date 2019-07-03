@@ -4,7 +4,7 @@ import unittest
 import pep8
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
-from models.__init__ import storage
+from models import storage
 import os
 
 
@@ -63,6 +63,12 @@ class TestBase(unittest.TestCase):
     def test_saveFS(self):
         self.ins.save()
         self.assertTrue(os.path.exists('file.json'))
+
+    def test_newFS(self):
+        l1 = len(storage.all())
+        dummy = BaseModel()
+        l2 = len(storage.all())
+        self.assertEqual(l1, l2 - 1)
 
 if __name__ == '__main__':
     unittest.main()
