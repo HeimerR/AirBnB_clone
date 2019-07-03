@@ -51,6 +51,7 @@ class TestBase(unittest.TestCase):
     def test_FileStorsageAttr(self):
         """ test basemodel attributes """
         self.assertEqual(hasattr(self.ins, "_FileStorage__file_path"), True)
+        self.assertTrue(type(self.ins._FileStorage__file_path) is str)
         self.assertEqual(hasattr(self.ins, "_FileStorage__objects"), True)
 
     def test_isinstanceofFileStorage(self):
