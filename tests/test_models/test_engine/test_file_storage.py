@@ -62,7 +62,14 @@ class TestBase(unittest.TestCase):
         self.assertTrue(type(my_dict) is dict)
 
     def test_saveFS(self):
-        self.ins.save()
+        dummy = BaseModel()
+        my_id = dummy.id
+        dummy.name = "Haroldo"
+        dummy.save()
+        storage.reload()
+        my_objs = storage.all()["BaseModel.{}".format(my_id)]
+        self.assertTrue(hasattr(my_objs, "name"))
+        self.assertTrue(my_objs.name == "Haroldo")
         self.assertTrue(os.path.exists('file.json'))
 
     def test_newFS(self):
