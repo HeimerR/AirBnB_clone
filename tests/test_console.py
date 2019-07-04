@@ -1,8 +1,7 @@
 from console import HBNBCommand
 import unittest
-from unittest.mock import create_autospec
+from unittest.mock import create_autospec, patch
 import sys
-from unittest.mock import patch
 from io import StringIO
 import os
 import pep8
@@ -12,8 +11,6 @@ class TestMyCLI(unittest.TestCase):
 
     classes = ["BaseModel", "User", "State", "City",
                "Amenity", "Place", "Review"]
-    functions = [".all()", ".count()", ".show({})",
-                 ".destroy({})", ".update({})"]
 
     def test_pep8(self):
         """ test pep8 """
@@ -86,6 +83,29 @@ class TestMyCLI(unittest.TestCase):
             self.assertTrue("created_at" in Output.getvalue().strip())
             self.assertTrue("updated_at" in Output.getvalue().strip())
 
+        """ <class>.show(<id>) method """
+
+        for cls in TestMyCLI.classes:
+            with patch('sys.stdout', new=StringIO()) as Output:
+                self.assertFalse(cli.onecmd('{}.show()'.format(cls)))
+            self.assertEqual("** instance id missing **",
+                             Output.getvalue().strip())
+        for cls in TestMyCLI.classes:
+            with patch('sys.stdout', new=StringIO()) as Output:
+                self.assertFalse(cli.onecmd('{}.show("23456")'.format(cls)))
+            self.assertEqual("** no instance found **",
+                             Output.getvalue().strip())
+        for cls in TestMyCLI.classes:
+            with patch('sys.stdout', new=StringIO()) as Output:
+                self.assertFalse(cli.onecmd('create {}'.format(cls)))
+                ids = Output.getvalue().strip()
+            with patch('sys.stdout', new=StringIO()) as Output:
+                self.assertFalse(cli.onecmd('{}.show("{}")'.format(cls, ids)))
+            self.assertTrue(ids in Output.getvalue().strip())
+            self.assertTrue(cls in Output.getvalue().strip())
+            self.assertTrue("created_at" in Output.getvalue().strip())
+            self.assertTrue("updated_at" in Output.getvalue().strip())
+
     def test_destroy(self):
         cli = self.create_session()
         with patch('sys.stdout', new=StringIO()) as Output:
@@ -115,6 +135,35 @@ class TestMyCLI(unittest.TestCase):
             self.assertTrue(ids in Output.getvalue().strip())
             with patch('sys.stdout', new=StringIO()) as Output:
                 self.assertFalse(cli.onecmd('destroy {} {}'.format(cls, ids)))
+            self.assertFalse(ids in Output.getvalue().strip())
+            self.assertEqual("", Output.getvalue().strip())
+            with patch('sys.stdout', new=StringIO()) as Output:
+                self.assertFalse(cli.onecmd('all'))
+            self.assertFalse(ids in Output.getvalue().strip())
+
+        """ <class>.destroy(<id>) method """
+
+        for cls in TestMyCLI.classes:
+            with patch('sys.stdout', new=StringIO()) as Output:
+                self.assertFalse(cli.onecmd('{}.destroy()'.format(cls)))
+            self.assertEqual("** instance id missing **",
+                             Output.getvalue().strip())
+        for cls in TestMyCLI.classes:
+            with patch('sys.stdout', new=StringIO()) as Output:
+                self.assertFalse(cli.onecmd('{}.destroy("123456")'
+                                 .format(cls)))
+            self.assertEqual("** no instance found **",
+                             Output.getvalue().strip())
+        for cls in TestMyCLI.classes:
+            with patch('sys.stdout', new=StringIO()) as Output:
+                self.assertFalse(cli.onecmd('create {}'.format(cls)))
+                ids = Output.getvalue().strip()
+            with patch('sys.stdout', new=StringIO()) as Output:
+                self.assertFalse(cli.onecmd('all'))
+            self.assertTrue(ids in Output.getvalue().strip())
+            with patch('sys.stdout', new=StringIO()) as Output:
+                self.assertFalse(cli.onecmd('{}.destroy("{}")'
+                                 .format(cls, ids)))
             self.assertFalse(ids in Output.getvalue().strip())
             self.assertEqual("", Output.getvalue().strip())
             with patch('sys.stdout', new=StringIO()) as Output:
@@ -192,6 +241,76 @@ class TestMyCLI(unittest.TestCase):
                 self.assertFalse(cli.onecmd('update {} {} attribute'
                                  .format(cls, ids)))
             self.assertEqual("** value missing **", Output.getvalue().strip())
+        for cls in TestMyCLI.classes:
+            with patch('sys.stdout', new=StringIO()) as Output:
+                self.assertFalse(cli.onecmd('create {}'.format(cls)))
+                ids = Output.getvalue().strip()
+            with patch('sys.stdout', new=StringIO()) as Output:
+                self.assertFalse(cli.onecmd('update {} {} attribute "test"'
+                                 .format(cls, ids)))
+            with patch('sys.stdout', new=StringIO()) as Output:
+                self.assertFalse(cli.onecmd('show {} {}'.format(cls, ids)))
+            self.assertTrue("attribute" in Output.getvalue().strip())
+            self.assertTrue("test" in Output.getvalue().strip())
+
+        """
+        <class name>.update(<id>, <attribute name>, <attribute value>)
+
+        method
+        """
+
+        for cls in TestMyCLI.classes:
+            with patch('sys.stdout', new=StringIO()) as Output:
+                self.assertFalse(cli.onecmd('{}.update()'.format(cls)))
+            self.assertEqual("** instance id missing **",
+                             Output.getvalue().strip())
+        for cls in TestMyCLI.classes:
+            with patch('sys.stdout', new=StringIO()) as Output:
+                self.assertFalse(cli.onecmd('{}.update("123456")'.format(cls)))
+            self.assertEqual("** no instance found **",
+                             Output.getvalue().strip())
+        for cls in TestMyCLI.classes:
+            with patch('sys.stdout', new=StringIO()) as Output:
+                self.assertFalse(cli.onecmd('create {}'.format(cls)))
+                ids = Output.getvalue().strip()
+            with patch('sys.stdout', new=StringIO()) as Output:
+                self.assertFalse(cli.onecmd('{}.update("{}")'
+                                 .format(cls, ids)))
+            self.assertEqual("** attribute name missing **",
+                             Output.getvalue().strip())
+        for cls in TestMyCLI.classes:
+            with patch('sys.stdout', new=StringIO()) as Output:
+                self.assertFalse(cli.onecmd('create {}'.format(cls)))
+                ids = Output.getvalue().strip()
+            with patch('sys.stdout', new=StringIO()) as Output:
+                self.assertFalse(cli.onecmd('{}.update("{}", "attribute")'
+                                 .format(cls, ids)))
+            self.assertEqual("** value missing **", Output.getvalue().strip())
+        for cls in TestMyCLI.classes:
+            with patch('sys.stdout', new=StringIO()) as Output:
+                self.assertFalse(cli.onecmd('create {}'.format(cls)))
+                ids = Output.getvalue().strip()
+            with patch('sys.stdout', new=StringIO()) as Output:
+                self.assertFalse(cli.onecmd('{}.update("{}", "attr", "test")'
+                                 .format(cls, ids)))
+            with patch('sys.stdout', new=StringIO()) as Output:
+                self.assertFalse(cli.onecmd('show {} {}'.format(cls, ids)))
+            self.assertTrue("attr" in Output.getvalue().strip())
+            self.assertTrue("test" in Output.getvalue().strip())
+
+        """ <class name>.update(<id>, <dictionary representation>) method """
+
+        for cls in TestMyCLI.classes:
+            with patch('sys.stdout', new=StringIO()) as Output:
+                self.assertFalse(cli.onecmd('create {}'.format(cls)))
+                ids = Output.getvalue().strip()
+            with patch('sys.stdout', new=StringIO()) as Output:
+                self.assertFalse(cli.onecmd('{}.update("{}", {{"num": 89}})'
+                                 .format(cls, ids)))
+            with patch('sys.stdout', new=StringIO()) as Output:
+                self.assertFalse(cli.onecmd('show {} {}'.format(cls, ids)))
+            self.assertTrue("num" in Output.getvalue().strip())
+            self.assertTrue("89" in Output.getvalue().strip())
 
     def test_count(self):
         cli = self.create_session()
