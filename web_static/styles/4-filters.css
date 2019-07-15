@@ -6,7 +6,7 @@ section.filters {
   border: 1px solid #dddddd;
   border-radius: 4px;
 }
-button {
+.filters button {
   position: absolute;
   font-size: 18px;
   background-color: #ff5a5f;
@@ -18,7 +18,8 @@ button {
   top: 11px;
   width: 20%;
   border-radius: 4px;
+  border: none;
 }
-button:hover {
+.filters button:hover {
   opacity: 0.9;
 }
